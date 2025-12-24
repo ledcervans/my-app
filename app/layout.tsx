@@ -10,8 +10,8 @@ const allan = Allan({
 })
 
 export const metadata: Metadata = {
-  title: "Best Wishes",
-  description: "Intern Well✨. Exam Well🍀",
+  title: "Trip lang",
+  description: "Testing Web",
     generator: 'v0.app'
 }
 

@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app"
+import { initializeApp, getApps } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
-import { getAnalytics } from "firebase/analytics"
+import { getAnalytics, isSupported } from "firebase/analytics"
 
 const firebaseConfig = {
   apiKey: "AIzaSyAU-6nbsTEdYaLaM8l_0cClcTQj9iY56ZQ",
@@ -12,15 +12,29 @@ const firebaseConfig = {
   measurementId: "G-Y9WMJJKW70",
 }
 
-let app
-let db
-let analytics
-
-if (typeof window !== "undefined") {
-  app = initializeApp(firebaseConfig)
-  db = getFirestore(app)
-  analytics = getAnalytics(app)
+// Initialize Firebase only on client side
+const getFirebaseApp = () => {
+  if (typeof window === "undefined") return null
+  if (getApps().length === 0) {
+    return initializeApp(firebaseConfig)
+  }
+  return getApps()[0]
 }
 
-export { db, analytics }
+const getFirestoreDb = () => {
+  const app = getFirebaseApp()
+  if (!app) return null
+  return getFirestore(app)
+}
 
+const getFirebaseAnalytics = async () => {
+  const app = getFirebaseApp()
+  if (!app) return null
+  const supported = await isSupported()
+  if (supported) {
+    return getAnalytics(app)
+  }
+  return null
+}
+
+export { getFirestoreDb, getFirebaseAnalytics }

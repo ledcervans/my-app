@@ -1,14 +1,17 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { db } from "../firebase"
-import { collection, addDoc } from "firebase/firestore"
+import { getFirestoreDb } from "../firebase"
+import { collection, addDoc, Firestore } from "firebase/firestore"
 
 export default function PersonalityQuiz() {
   const [isClient, setIsClient] = useState(false)
+  const [db, setDb] = useState<Firestore | null>(null)
 
   useEffect(() => {
     setIsClient(true)
+    const firestore = getFirestoreDb()
+    setDb(firestore)
   }, [])
 
   const questions = [
@@ -112,7 +115,7 @@ export default function PersonalityQuiz() {
     const resultType = Object.keys(scores).find((key) => scores[key] === highestScore)
     setResult(resultType || null)
 
-    if (isClient && resultType) {
+    if (isClient && resultType && db) {
       try {
         await addDoc(collection(db, "quizResults"), {
           result: resultType,
@@ -173,4 +176,3 @@ export default function PersonalityQuiz() {
     </div>
   )
 }
-

@@ -1,10 +1,12 @@
-import ResponsiveBirthdayCard from "../components/ResponsiveBirthdayCard"
-import styles from "./page.module.css"
+import dynamic from "next/dynamic"
+
+const PersonalityQuiz = dynamic(() => import("../components/PersonalityQuiz"), { ssr: false })
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <ResponsiveBirthdayCard />
+    <div className="App">
+      <PersonalityQuiz />
     </div>
   )
 }
+

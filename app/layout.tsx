@@ -1,17 +1,9 @@
 import type React from "react"
-import type { Metadata } from "next"
-import { Allan } from "next/font/google"
-import "./globals.css"
+import "../styles/globals.css"
 
-const allan = Allan({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-})
-
-export const metadata: Metadata = {
-  title: "Trip lang",
-  description: "Testing Web",
+export const metadata = {
+  title: "Quiz Shit",
+  description: "Sasagot ka o ano?",
     generator: 'v0.app'
 }
 
@@ -21,11 +13,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={allan.className}>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-      </head>
+    <html lang="en">
       <body>{children}</body>
     </html>
   )
 }
+

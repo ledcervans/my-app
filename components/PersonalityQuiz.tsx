@@ -1,17 +1,12 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { getFirestoreDb } from "../firebase"
-import { collection, addDoc, Firestore } from "firebase/firestore"
 
 export default function PersonalityQuiz() {
   const [isClient, setIsClient] = useState(false)
-  const [db, setDb] = useState<Firestore | null>(null)
 
   useEffect(() => {
     setIsClient(true)
-    const firestore = getFirestoreDb()
-    setDb(firestore)
   }, [])
 
   const questions = [
@@ -115,8 +110,25 @@ export default function PersonalityQuiz() {
     const resultType = Object.keys(scores).find((key) => scores[key] === highestScore)
     setResult(resultType || null)
 
-    if (isClient && resultType && db) {
+    if (isClient && resultType) {
       try {
+        // Dynamically import Firebase to avoid SSR issues
+        const { initializeApp, getApps } = await import("firebase/app")
+        const { getFirestore, collection, addDoc } = await import("firebase/firestore")
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyAU-6nbsTEdYaLaM8l_0cClcTQj9iY56ZQ",
+          authDomain: "my-app-dc361.firebaseapp.com",
+          projectId: "my-app-dc361",
+          storageBucket: "my-app-dc361.firebasestorage.app",
+          messagingSenderId: "370926373293",
+          appId: "1:370926373293:web:815b5ed42644a6809bf924",
+          measurementId: "G-Y9WMJJKW70",
+        }
+        
+        const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+        const db = getFirestore(app)
+        
         await addDoc(collection(db, "quizResults"), {
           result: resultType,
           timestamp: new Date(),

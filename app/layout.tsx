@@ -10,9 +10,9 @@ const allan = Allan({
 })
 
 export const metadata: Metadata = {
-  title: "Trip lang",
+  title: "For Cam",
   description: "Testing Web",
-    generator: 'v0.app'
+  generator: 'leds'
 }
 
 export default function RootLayout({

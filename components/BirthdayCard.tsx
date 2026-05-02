@@ -22,8 +22,9 @@ const BirthdayCard: React.FC = () => {
       <div className={styles.back}>
         <div className={styles.letter}>
           <div className={styles.content}>
-            <p>Feliz cumpleaños adelantado🥳🥳</p>
-            <p>Carmina💛</p>
+            <p>lol
+            </p>
+            <p>💀</p>
           </div>
           <div className={styles.box}>
             <div className={styles.cake}>

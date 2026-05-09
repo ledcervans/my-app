@@ -10,7 +10,7 @@ const allan = Allan({
 })
 
 export const metadata: Metadata = {
-  title: "For Cam",
+  title: "For Veee",
   description: "Testing Web",
   generator: 'leds'
 }
